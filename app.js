@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 
 let moviesRouter = require('./routes/movies');
-let actorsRouter = require('./routes/actors');
+let charactersRouter = require('./routes/characters');
 let genresRouter = require('./routes/genres');
 let authRouter = require('./routes/auth');
 
@@ -14,10 +14,10 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/movies', moviesRouter);
-app.use('/api/actors', actorsRouter);
-app.use('/api/genres', genresRouter);
-app.use('/',authRouter)
+app.use('/movies', moviesRouter);
+app.use('/characters', charactersRouter);
+app.use('/genres', genresRouter);
+app.use('/auth/',authRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
