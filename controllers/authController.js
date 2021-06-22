@@ -33,15 +33,15 @@ module.exports = {
             },
             movies : {
                 all : {
-                    endpoint : getBaseUrl(req) + '/api/movies/',
+                    endpoint : getBaseUrl(req) + '/movies/',
                     method : 'GET'
                 },
                 one : {
-                    endpoint : getBaseUrl(req) + '/api/movies/{id}',
+                    endpoint : getBaseUrl(req) + '/movies/{id}',
                     method : 'GET'
                 },
                 create : {
-                    endpoint : getBaseUrl(req) + '/api/movies/create',
+                    endpoint : getBaseUrl(req) + '/movies/create',
                     method : 'POST',
                     columns : {
                         title : 'string(500)',
@@ -53,26 +53,26 @@ module.exports = {
                     }
                 },
                 update : {
-                    endpoint : getBaseUrl(req) + '/api/movies/update/{id}',
+                    endpoint : getBaseUrl(req) + '/movies/update/{id}',
                     method : 'PUT'
                 },
                 delete : {
-                    endpoint : getBaseUrl(req) + '/api/movies/delete/{id}',
+                    endpoint : getBaseUrl(req) + '/movies/delete/{id}',
                     method : 'DELETE'
                 },
                 
             },
             genres : {
                 all : {
-                    endpoint : getBaseUrl(req) + '/api/genres',
+                    endpoint : getBaseUrl(req) + '/genres',
                 method : 'GET'
                 },
                 one : {
-                    endpoint : getBaseUrl(req) + '/api/genres/{id}',
+                    endpoint : getBaseUrl(req) + '/genres/{id}',
                     method : 'GET'
                 },
                 create : {
-                    endpoint : getBaseUrl(req) + '/api/genres/create',
+                    endpoint : getBaseUrl(req) + '/genres/create',
                     method : 'POST',
                     columns : {
                         name : 'string(100)',
@@ -81,11 +81,11 @@ module.exports = {
                     }
                 },
                 update : {
-                    endpoint : getBaseUrl(req) + '/api/genres/update/{id}',
+                    endpoint : getBaseUrl(req) + '/genres/update/{id}',
                     method : 'PUT'
                 },
                 delete : {
-                    endpoint : getBaseUrl(req) + '/api/genres/delete/{id}',
+                    endpoint : getBaseUrl(req) + '/genres/delete/{id}',
                     method : 'DELETE'
                 },
             }
