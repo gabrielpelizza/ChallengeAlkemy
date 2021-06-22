@@ -29,7 +29,7 @@ module.exports = {
                 nombre: req.body.nombre,
                 edad: req.body.edad,
                 peso: req.body.peso,
-                historia
+                historia: req.body.historia
             })
             .then(function(result) {
                 return res.status(201).json(result)
@@ -39,11 +39,11 @@ module.exports = {
             })
     },
     update : function(req,res){
-        db.Pelicula.update({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            rating: req.body.rating,
-            favorite_movie_id: req.body.favorite_movie_id
+        db.Personaje.update({
+            nombre: req.body.nombre,
+            edad: req.body.edad,
+            peso: req.body.peso,
+            historia: req.body.historia
         },
         {
             where: {
