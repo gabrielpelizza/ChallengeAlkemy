@@ -6,23 +6,29 @@ const getBaseUrl = (req) => req.protocol + '://' + req.get('host');
 
 module.exports = {
     getAll: function (req, res) {
-        db.Pelicula.findAll({
-            include : [
-                {association : 'genero'},
-                {association : 'actores'}
-            ]
-        })
+        db.Pelicula.findAll()
             .then(movies => {
+                moviearray = []
                 movies.forEach(movie => {
                     movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                    moviefilter = {
+                        id : movie.id,
+                        titulo : movie.titulo,
+                        imagen : movie.imagen,
+                        fecha_de_creacion : movie.fecha_de_creacion
+                    }
+                    moviearray.push(moviefilter)
                 });
+                
+                console.log(moviearray)
+
                 let response = {
                     meta: {
                         link: getUrl(req),
                         status: 200,
                         cantidad: movies.length
                     },
-                    data: movies
+                    data: moviearray
                 }
                 return res.status(200).json(response)
             })
@@ -41,33 +47,29 @@ module.exports = {
             db.Pelicula.findOne({
                 where : {
                     id: req.params.id
-                },
-                include : [
-                    {association :'generos'},
-                    {association : 'personajes'}
-                ]
+                }
             })
-                .then(movie => {
-                    if (movie) {
-                        let response = {
-                            meta: {
-                                link: getUrl(req),
-                                status: 200
-                            },
-                            data: movie
-                        }
-                        return res.status(200).json(response)
-                    } else {
-                        let response = {
-                            meta: {
-                                status: 404,
-                                msg: 'ID no encontrado'
-                            }
-                        }
-                        return res.status(404).json(response)
+            .then(movie => {
+                if (movie) {
+                    let response = {
+                        meta: {
+                            link: getUrl(req),
+                            status: 200
+                        },
+                        data: movie
                     }
-                })
-                .catch(error => res.status(400).send(error))
+                    return res.status(200).json(response)
+                } else {
+                    let response = {
+                        meta: {
+                            status: 404,
+                            msg: 'ID no encontrado'
+                        }
+                    }
+                    return res.status(404).json(response)
+                }
+            })
+            .catch(error => res.status(400).send(error))
         }
 
     },
@@ -82,7 +84,7 @@ module.exports = {
         })
         .then(movie => {
             return res.status(201).json({
-                link: getBaseUrl(req) + '/api/movies/' + movie.id,
+                link: getBaseUrl(req) + '/movies/' + movie.id,
                 msg: "Pelicula añadida con éxito"
             })
         })
@@ -116,6 +118,57 @@ module.exports = {
                     return res.status(500).json({error})
             }
         })
+    },
+    update: (req,res)=>{
+        const { titulo, fecha_de_creacion, clasificacion, genero_id } = req.body
+
+        db.Pelicula.update({
+            titulo,
+            fecha_de_creacion,
+            clasificacion,
+            genero_id,
+        },
+            {
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then((result) => {
+                if (result[0]) {
+                    console.log(result)
+                    return res.status(201).json({
+                        msg: "Actualización exitosa"
+                    })
+                } else {
+                    return res.status(200).json({
+                        msg: "No se hicieron cambios"
+                    })
+                }
+            })
+            .catch(err => res.status(500).json(err))
+    },
+    remove: (req,res)=>{
+        db.Pelicula.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(result => {
+            if (result) {
+                return res.status(200).json({
+                    msg: "Pelicula eliminada"
+                })
+            } else {
+                return res.status(200).json({
+                    msg: "No se hicieron cambios"
+                })
+            }
+
+        })
+        .catch(err => res.status(500).json(err))
+    },
+    searchMovie: (req,res)=>{
+       const { name, genre, order} = req.body;
     }
 
 }

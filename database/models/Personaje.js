@@ -54,9 +54,6 @@ module.exports = function(sequelize, dataTypes) {
                 }
             }
         },
-        pelicula_id : {
-            type : dataTypes.INTEGER.UNSIGNED
-        }
     }
 
     let config = {

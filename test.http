@@ -1,0 +1,18 @@
+GET http://localhost:3000/
+
+###
+GET http://localhost:3000/movies/
+Content-Type : aplication/json
+
+###
+GET http://localhost:3000/movies/8
+Content-Type : aplication/json
+
+
+###
+DELETE http://localhost:3000/movies/delete/8
+Content-Type : aplication/json
+
+###
+GET http://localhost:3000/characters/
+Content-Type : aplication/json
