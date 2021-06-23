@@ -11,7 +11,7 @@ module.exports = {
                         imagen : character.imagen,
                         nombre : character.nombre
                     }
-                    moviearray.push(characterfilter)
+                    characterarray.push(characterfilter)
                 });
                 
                 return res.status(200).json(characterarray)
@@ -61,7 +61,7 @@ module.exports = {
       
         db.Personaje_pelicula.destroy({
             where : {
-                actor_id : req.params.id
+                personaje_id : req.params.id
             }
         })
         .then( 
