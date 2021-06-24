@@ -10,9 +10,9 @@ Content-Type : aplication/json
 
 
 ###
-DELETE http://localhost:3000/movies/delete/8
+DELETE http://localhost:3000/movies/delete/9
 Content-Type : aplication/json
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI0NTYxMzA3LCJleHAiOjE2MjQ2NDc3MDd9.W_karcPBcNe6ERd-YgKKakTmV3H1Cx9gWYy2y8k2j_8
+token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjI0NTYxNzUwLCJleHAiOjE2MjQ2NDgxNTB9.aqQSM3_cmLPb3PYE1N2bazb9IWJ8_Vkb-dFmzyVSmsk
 
 ###
 GET http://localhost:3000/characters/

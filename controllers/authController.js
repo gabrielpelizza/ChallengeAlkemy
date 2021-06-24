@@ -162,7 +162,7 @@ module.exports = {
                 },
                 process.env.SECRET,
                 {
-                    expiresIn:60*60 //1 hora
+                    expiresIn:60 * 60 * 24
                 })
 
             return res.status(200).json({

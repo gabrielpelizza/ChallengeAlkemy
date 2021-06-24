@@ -10,8 +10,8 @@ module.exports = (req,res,next) => {
         })
     }
     try {
-        const jwtDecode = jwt.verify(token,process.env.SECRET)
-        db.User.findByPk(jwtDecode.id)
+        const jwtDecode = jwt.verify(token ,process.env.SECRET)
+        db.Users.findByPk(jwtDecode.id)
         .then(user => {
             if(!user){
                 return res.status(401).json({
