@@ -1,31 +1,49 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  User.init({
-    email:{
-      type : DataTypes.STRING,
-      validate : {
-        isEmail : {
-          msg : "El email es inválido"
+module.exports = function(sequelize, dataTypes) {
+
+  let alias = "Users";
+
+  let cols = {
+      id: {
+          type: dataTypes.INTEGER.UNSIGNED,
+          primaryKey: true,
+          autoIncrement: true
+      },
+      email: {
+        type :  dataTypes.STRING(150),
+        allowNull : false,
+        validate : {
+          notNull : {
+            msg : 'El campo no puede ser nulo'
+          },
+          notEmpty : {
+            msg : 'El campo email es obligatorio'
+          },
+          isEmail : {
+            msg : 'Debe ser un email válido'
+          }
+        }
+      },
+      pass: {
+        type :  dataTypes.STRING(150),
+        allowNull : false,
+        validate : {
+          notNull : {
+            msg : 'El campo no puede ser nulo'
+          },
+          notEmpty : {
+            msg : 'El campo contraseña es obligatorio'
+          }
         }
       }
-    },
-    pass: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'usuarios',
-  });
-  return User;
-};
+  }
+
+  let config = {
+      tableName: "usuarios",
+      timestamps: false,
+      underscored: true
+  }
+
+  let Users = sequelize.define(alias, cols, config)
+
+  return Users
+}

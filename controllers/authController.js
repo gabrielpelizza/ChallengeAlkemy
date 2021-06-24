@@ -1,6 +1,9 @@
+require('dotenv').config()
+
 const db = require('../database/models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 const verifyData = (email,pass,res) => {
     if(!email || !pass){
         return res.status(401).json({
@@ -110,11 +113,13 @@ module.exports = {
                 })
             }
         })
-        .catch(error => res.status(500).json(error))
+        .catch(error => res.status(500).json({
+            msg : error
+        }))
         
         db.Users.create({
             email,
-            pass : bcrypt.hashSync(pass,12)
+            pass : bcrypt.hashSync(req.body.pass,12)
         })
         .then(user => {
             const token = jwt.sign(
@@ -123,7 +128,7 @@ module.exports = {
                 },
                 process.env.SECRET,
                 {
-                    expiresIn:60*60 //120 segundos
+                    expiresIn:60 * 60 * 24//24 horas
                 }
                 )
           return res.status(200).json({
@@ -139,7 +144,7 @@ module.exports = {
 
         verifyData(email,pass,res)
 
-        db.User.findOne({
+        db.Users.findOne({
             where : {
                 email
             }
@@ -167,33 +172,4 @@ module.exports = {
                     })
         })
     },
-    profile : (req,res) => {
-        const token = req.headers['token'];
-        if(!token){
-            return res.status(403).json({
-                status : 403,
-                auth:false,
-                msg:"No se ha enviado un token"
-            })
-        }
-        try{
-            const jwtDecode = jwt.verify(token,process.env.SECRET);
-            db.User.findByPk(jwtDecode.id)
-            .then(user => {
-                if(!user){
-                    return res.status(401).json({
-                                msg : 'El usuario no está registrado'
-                            })
-                }
-                return res.status(200).json('El usuario logueado es ' + user.email)
-            })
-            .catch(error => res.status(500).json(error))
-        } catch(error){
-            return res.status(403).json({
-                        error,
-                        status : 403,
-                        msg : "Token inválido"
-                    })
-        }
-    }
 }

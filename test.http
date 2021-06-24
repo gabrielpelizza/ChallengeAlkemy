@@ -12,7 +12,26 @@ Content-Type : aplication/json
 ###
 DELETE http://localhost:3000/movies/delete/8
 Content-Type : aplication/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI0NTYxMzA3LCJleHAiOjE2MjQ2NDc3MDd9.W_karcPBcNe6ERd-YgKKakTmV3H1Cx9gWYy2y8k2j_8
 
 ###
 GET http://localhost:3000/characters/
 Content-Type : aplication/json
+
+###
+POST http://localhost:3000/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"loremipsum@gmail.com",
+    "pass":"xxxxxx"
+}
+
+###
+POST http://localhost:3000/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"loremipsum@gmail.com",
+    "pass":"xxxxxx"
+}

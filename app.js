@@ -1,6 +1,8 @@
+require('dotenv').config()
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var logger = require('morgan');
 
 let moviesRouter = require('./routes/movies');
 let charactersRouter = require('./routes/characters');
@@ -10,7 +12,7 @@ let authRouter = require('./routes/auth');
 
 var app = express();
 
-
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
