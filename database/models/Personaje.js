@@ -54,6 +54,10 @@ module.exports = function(sequelize, dataTypes) {
                 }
             }
         },
+        historia: {
+            type: dataTypes.STRING,
+            allowNull: true,
+        }
     }
 
     let config = {
@@ -65,7 +69,7 @@ module.exports = function(sequelize, dataTypes) {
     let Character = sequelize.define(alias, cols, config)
 
     Character.associate = function(models){
-        Character.belongsToMany(models.Personaje_pelicula,{
+        Character.belongsToMany(models.Pelicula,{
             through : "Personaje_pelicula",
             as : "peliculas",
             foreignkey : "personaje_id",

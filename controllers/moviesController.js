@@ -222,7 +222,6 @@ module.exports = {
                         personajeFilter.push(personajes)
                     })
 
-                    console.log(movieFilter)
                     let response = {
                         meta: {
                             link: getUrl(req),
@@ -230,7 +229,7 @@ module.exports = {
                         },
                         data: movieFilter
                     }
-                    return res.status(200).json(movieFilter)
+                    return res.status(200).json(response)
                 } else {
                     let response = {
                         meta: {

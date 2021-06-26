@@ -119,7 +119,7 @@ module.exports = {
         
     },
     getById: function(req, res) {
-        db.Personaje.findByPk(req.params.id)
+/*         db.Personaje.findByPk(req.params.id)
             .then(function(character) {
                 let response = {
                     meta: {
@@ -129,7 +129,66 @@ module.exports = {
                     data: character
                 }
                 return res.status(200).json(response)
-            })
+            }) */
+            if (req.params.id % 1 !== 0) {
+                let response = {
+                    meta: {
+                        status: 400,
+                        msg: 'ID incorrecto'
+                    }
+                }
+                return res.status(404).json(response)
+            } else {
+                db.Personaje.findByPk(req.params.id,{
+                    include : [
+                        {
+                          model: db.Pelicula,
+                          as: "peliculas",
+                          through: {
+                            attributes: ["id","personaje_id", "pelicula_id"],
+                          }
+                        }
+                      ]
+                })
+                .then(character => {
+                    if (character) {
+                        movieFilter = []
+                        personajeFilter = {
+                            imagen: character.imagen,
+                            nombre: character.nombre,
+                            edad: character.edad,
+                            peso: character.peso,
+                            historia:character.historia,
+                            pelicula:movieFilter  
+                        }
+                        
+                        character.peliculas.forEach(a => {
+                            let movie = {
+                                titulo:a.titulo
+                            }
+                            movieFilter.push(movie)
+                        })
+    
+                        let response = {
+                            meta: {
+                                link: getUrl(req),
+                                status: 200
+                            },
+                            data: personajeFilter
+                        }
+                        return res.status(200).json(response)
+                    } else {
+                        let response = {
+                            meta: {
+                                status: 404,
+                                msg: 'ID no encontrado'
+                            }
+                        }
+                        return res.status(404).json(response)
+                    }
+                })
+                .catch(error => res.status(400).send(error))
+            }
     },
     create: function(req, res) {
         db.Personaje.create({

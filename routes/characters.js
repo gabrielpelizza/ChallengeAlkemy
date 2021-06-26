@@ -7,7 +7,7 @@ const verifyToken = require('../middlewares/verifyToken')
 
 router.get('/', getAll); //---> devuelve todos los actores
 router.post('/create',verifyToken, create); //---> permite crear un actor
-router.get('/:id', verifyToken,getById); //---> devuelve el actor segun parametro
+router.get('/:id',getById); //---> devuelve el actor segun parametro
 router.put('/update/:id',verifyToken,update);
 router.delete('/delete/:id',verifyToken,remove);
 router.post('/associate', verifyToken,associateCreate)

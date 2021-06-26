@@ -15,7 +15,7 @@ Content-Type : aplication/json
 token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjI0NTYxNzUwLCJleHAiOjE2MjQ2NDgxNTB9.aqQSM3_cmLPb3PYE1N2bazb9IWJ8_Vkb-dFmzyVSmsk
 
 ###
-GET http://localhost:3000/characters/
+GET http://localhost:3000/characters/1
 Content-Type : aplication/json
 
 ###
