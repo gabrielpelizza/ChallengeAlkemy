@@ -25,18 +25,6 @@ module.exports = function(sequelize, dataTypes) {
 
     let Charmovie = sequelize.define(alias, cols, config)
 
-/*     Charmovie.associate = function(models){
-        Charmovie.belongsTo(models.Pelicula,{
-            as : 'pelicula',
-            foreignKey : 'pelicula_id'
-        })
-    }
-    Charmovie.associate = function(models){
-        Charmovie.belongsTo(models.Personaje,{
-            as : 'personaje',
-            foreignKey : 'personaje_id'
-        })
-    } */
 
     return Charmovie
 }

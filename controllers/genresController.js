@@ -121,7 +121,7 @@ module.exports = {
             })
             .catch(errres.status(500).json(err))
     },
-    delete: function (req, res) {
+    remove: function (req, res) {
         db.Genero.destroy({
             where: {
                 id: req.params.id

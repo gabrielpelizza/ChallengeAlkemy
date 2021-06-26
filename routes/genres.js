@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/genresController')
+const {getAll, create, getById, update, remove} = require('../controllers/genresController')
 
-/* router.get('/', controller.getAll); 
-router.post('/create', controller.create); 
-router.get('/:id', controller.getById);
-router.put('/update/:id',controller.update); 
-router.delete('/delete/:id',controller.delete);  */
+const verifyToken = require('../middlewares/verifyToken')
+
+router.get('/', getAll); 
+router.post('/create',verifyToken, create); 
+router.get('/:id', verifyToken,getById);
+router.put('/update/:id',verifyToken,update); 
+router.delete('/delete/:id',verifyToken,remove);
 
 module.exports = router

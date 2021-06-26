@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const sgMail = require('@sendgrid/mail')
 const db = require('../database/models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -99,7 +99,7 @@ module.exports = {
         
         verifyData(email,pass,res)
 
-        db.Users.findOne({
+       db.Users.findOne({
             where : {
                 email
             }
@@ -112,32 +112,57 @@ module.exports = {
                     msg : 'El email ya se encuentra registrado'
                 })
             }
+            else{
+                db.Users.create({
+                    email,
+                    pass : bcrypt.hashSync(req.body.pass,12)
+                })
+                .then(user => {
+                    const email = user.email
+                    const token = jwt.sign(
+                        {
+                            id:user.id
+                        },
+                        process.env.SECRET,
+                        {
+                            expiresIn:60 * 60 * 24//24 horas
+                        }
+                    )
+                        return response = {
+                            token,
+                            email
+                        }
+                })
+                .then(response =>{
+                    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+                    const msg = {
+                        to: response.email, // Change to your recipient
+                        from: 'gbrpelizza@gmail.com', // Change to your verified sender
+                        subject: 'Sending with SendGrid is Fun',
+                        text: 'and easy to do anywhere, even with Node.js',
+                        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                    }
+        
+                    sgMail.send(msg).then(() => {
+                        return res.status(200).json({
+                            status : 200,
+                            auth : true,
+                            token : response.token
+                        })
+                    }).catch((error) => {
+                        console.log(error.response.body)
+                        // console.log(error.response.body.errors[0].message)
+                    })
+                })
+            }
         })
         .catch(error => res.status(500).json({
             msg : error
-        }))
+        })) 
         
-        db.Users.create({
-            email,
-            pass : bcrypt.hashSync(req.body.pass,12)
-        })
-        .then(user => {
-            const token = jwt.sign(
-                {
-                    id:user.id
-                },
-                process.env.SECRET,
-                {
-                    expiresIn:60 * 60 * 24//24 horas
-                }
-                )
-          return res.status(200).json({
-                    status : 200,
-                    auth : true,
-                    token : token
-                })
-        })
+        
         .catch(error => res.status(500).json(error))
+
     },
     login : (req,res) => {
         const {email, pass} = req.body
