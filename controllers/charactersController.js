@@ -207,7 +207,7 @@ module.exports = {
     },
     update : function(req,res){
         db.Personaje.update({
-            imagen : req.query.imagen,
+            imagen : req.body.imagen,
             nombre: req.body.nombre,
             edad: req.body.edad,
             peso: req.body.peso,

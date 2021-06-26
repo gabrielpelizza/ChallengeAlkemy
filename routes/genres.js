@@ -6,8 +6,8 @@ const {getAll, create, getById, update, remove} = require('../controllers/genres
 const verifyToken = require('../middlewares/verifyToken')
 
 router.get('/', getAll); 
+router.get('/:id',getById);
 router.post('/create',verifyToken, create); 
-router.get('/:id', verifyToken,getById);
 router.put('/update/:id',verifyToken,update); 
 router.delete('/delete/:id',verifyToken,remove);
 

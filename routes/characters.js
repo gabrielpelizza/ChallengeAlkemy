@@ -11,7 +11,7 @@ router.get('/:id',getById); //---> devuelve el actor segun parametro
 router.put('/update/:id',verifyToken,update);
 router.delete('/delete/:id',verifyToken,remove);
 router.post('/associate', verifyToken,associateCreate)
-router.post('/associate/update',verifyToken, associateUpdate)
-router.post('/assosiate/remove',verifyToken, associateRemove)
+router.put('/associate/update',verifyToken, associateUpdate)
+router.delete('/assosiate/remove',verifyToken, associateRemove)
 
 module.exports = router

@@ -12,8 +12,8 @@ router.post('/create', verifyToken, create); //---> permite crear una pelicula
 router.put('/update/:id', verifyToken, update); //--->  actualiza los datos de la pelicula
 router.delete('/delete/:id', verifyToken,remove); //---> elimina una pelicula*/
 router.post('/associate', verifyToken,associateCreate)
-router.post('/associate/update',verifyToken, associateUpdate)
-router.post('/assosiate/remove',verifyToken, associateRemove)
+router.post('/associate/update/:id',verifyToken, associateUpdate)
+router.post('/assosiate/remove/:id',verifyToken, associateRemove)
 
 
 module.exports = router;

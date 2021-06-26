@@ -5,7 +5,7 @@ GET http://localhost:3000/movies
 Content-Type : aplication/json
 
 ###
-GET http://localhost:3000/movies/10
+GET http://localhost:3000/movies/1
 Content-Type : aplication/json
 
 
