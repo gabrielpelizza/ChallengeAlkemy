@@ -5,34 +5,182 @@ const getUrl = (req) => req.protocol +'://'+ req.get('host') + req.originalUrl
 const getBaseUrl = (req) => req.protocol + '://' + req.get('host');
 
 module.exports = {
-    getAll: function (req, res) {
-        db.Pelicula.findAll()
-            .then(movies => {
-                moviearray = []
-                movies.forEach(movie => {
-                    movie.setDataValue("link", getUrl(req) + '/' + movie.id)
-                    moviefilter = {
-                        id : movie.id,
-                        titulo : movie.titulo,
-                        imagen : movie.imagen,
-                        fecha_de_creacion : movie.fecha_de_creacion
-                    }
-                    moviearray.push(moviefilter)
-                });
-                
-                console.log(moviearray)
+    getMovies: function (req, res) {
+            if(Object.keys(req.query).length === 0){
+                db.Pelicula.findAll()
+                .then(movies => {
+                    moviearray = []
+                    movies.forEach(movie => {
+                        movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                        moviefilter = {
+                            id : movie.id,
+                            titulo : movie.titulo,
+                            imagen : movie.imagen,
+                            fecha_de_creacion : movie.fecha_de_creacion
+                        }
+                        moviearray.push(moviefilter)
+                    });
+                    
+                    console.log(moviearray)
 
-                let response = {
-                    meta: {
-                        link: getUrl(req),
-                        status: 200,
-                        cantidad: movies.length
-                    },
-                    data: moviearray
+                    let response = {
+                        meta: {
+                            link: getUrl(req),
+                            status: 200,
+                            cantidad: movies.length
+                        },
+                        data: moviearray
+                    }
+                    return res.status(200).json(response)
+                })
+                .catch(error => res.status(404).send(error))
+            }
+            else{
+                switch (true) {
+                    case req.query.order === "DESC":
+                        db.Pelicula.findAll({
+                            order:[
+                                ["titulo","DESC"]
+                            ]
+                        })
+                        .then(movies => {
+                            moviearray = []
+                            movies.forEach(movie => {
+                                movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                                moviefilter = {
+                                    id : movie.id,
+                                    titulo : movie.titulo,
+                                    imagen : movie.imagen,
+                                    fecha_de_creacion : movie.fecha_de_creacion
+                                }
+                                moviearray.push(moviefilter)
+                            });
+                            
+                            console.log(moviearray)
+        
+                            let response = {
+                                meta: {
+                                    link: getUrl(req),
+                                    status: 200,
+                                    cantidad: movies.length
+                                },
+                                data: moviearray
+                            }
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => res.status(404).send(error))
+                        break;
+                    case req.query.order === "ASC":
+                        db.Pelicula.findAll({
+                            order:[
+                                ["titulo","ASC"]
+                            ]
+                        })
+                        .then(movies => {
+                            moviearray = []
+                            movies.forEach(movie => {
+                                movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                                moviefilter = {
+                                    id : movie.id,
+                                    titulo : movie.titulo,
+                                    imagen : movie.imagen,
+                                    fecha_de_creacion : movie.fecha_de_creacion
+                                }
+                                moviearray.push(moviefilter)
+                            });
+                            
+                            console.log(moviearray)
+        
+                            let response = {
+                                meta: {
+                                    link: getUrl(req),
+                                    status: 200,
+                                    cantidad: movies.length
+                                },
+                                data: moviearray
+                            }
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => res.status(404).send(error))
+                        break;
+                    case req.query.name != undefined && req.query.name.length != 0:
+                        db.Pelicula.findAll({
+                            where:{
+                                titulo:{
+                                    [Op.like]: `%${req.query.name}%`
+                                }
+                            }
+                        })
+                        .then(movies => {
+                            moviearray = []
+                            movies.forEach(movie => {
+                                movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                                moviefilter = {
+                                    id : movie.id,
+                                    titulo : movie.titulo,
+                                    imagen : movie.imagen,
+                                    fecha_de_creacion : movie.fecha_de_creacion
+                                }
+                                moviearray.push(moviefilter)
+                            });
+                            
+                            console.log(moviearray)
+        
+                            let response = {
+                                meta: {
+                                    link: getUrl(req),
+                                    status: 200,
+                                    cantidad: movies.length
+                                },
+                                data: moviearray
+                            }
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => res.status(404).send(error))
+                        console.log(req.query.name)
+                        break;
+                        
+                    case req.query.genre != undefined:
+                        db.Pelicula.findAll({
+                            where:{
+                                genero_id: req.query.genre
+                            }
+                        })
+                        .then(movies => {
+                            moviearray = []
+                            movies.forEach(movie => {
+                                movie.setDataValue("link", getUrl(req) + '/' + movie.id)
+                                moviefilter = {
+                                    id : movie.id,
+                                    titulo : movie.titulo,
+                                    imagen : movie.imagen,
+                                    fecha_de_creacion : movie.fecha_de_creacion
+                                }
+                                moviearray.push(moviefilter)
+                            });
+        
+                            let response = {
+                                meta: {
+                                    link: getUrl(req),
+                                    status: 200,
+                                    cantidad: movies.length
+                                },
+                                data: moviearray
+                            }
+                            return res.status(200).json(response)
+                        })
+                        .catch(error => res.status(404).send(error))
+                        break;
+                    default:
+                        res.status(404).json({
+                            meta:{
+                                status: 404,
+                                msg: "el query ingresado es invalido o se encuentra vacio",
+                            }
+                        })
+                        break;
                 }
-                return res.status(200).json(response)
-            })
-            .catch(error => res.status(404).send(error))
+            }
     },
     getById: function (req, res) {
         if (req.params.id % 1 !== 0) {
@@ -44,21 +192,45 @@ module.exports = {
             }
             return res.status(404).json(response)
         } else {
-            db.Pelicula.findOne({
-                where : {
-                    id: req.params.id
-                }
+            db.Pelicula.findByPk(req.params.id,{
+                include : [
+                    {
+                      model: db.Personaje,
+                      as: "personajes",
+                      through: {
+                        attributes: ["id","personaje_id", "pelicula_id"],
+                      }
+                    }
+                  ]
             })
             .then(movie => {
                 if (movie) {
+                    personajeFilter = []
+                    movieFilter = {
+                        imagen: movie.imagen,
+                        titulo : movie.titulo,
+                        fecha_de_creacion:movie.fecha_de_creacion,
+                        clasificacion:movie.genero_id,
+                        genero_id:movie.genero_id,
+                        personajes:personajeFilter
+                    }
+                    
+                    movie.personajes.forEach(a => {
+                        let personajes = {
+                            nombre:a.nombre
+                        }
+                        personajeFilter.push(personajes)
+                    })
+
+                    console.log(movieFilter)
                     let response = {
                         meta: {
                             link: getUrl(req),
                             status: 200
                         },
-                        data: movie
+                        data: movieFilter
                     }
-                    return res.status(200).json(response)
+                    return res.status(200).json(movieFilter)
                 } else {
                     let response = {
                         meta: {
@@ -75,8 +247,9 @@ module.exports = {
     },
     create: function (req, res) {
      
-        const { titulo, fecha_de_creacion, clasificacion, genero_id } = req.body
+        const { imagen, titulo, fecha_de_creacion, clasificacion, genero_id } = req.body
         db.Pelicula.create({
+            imagen,
             titulo,
             fecha_de_creacion,
             clasificacion,
@@ -120,9 +293,10 @@ module.exports = {
         })
     },
     update: (req,res)=>{
-        const { titulo, fecha_de_creacion, clasificacion, genero_id } = req.body
+        const { imagen, titulo, fecha_de_creacion, clasificacion, genero_id } = req.body
 
         db.Pelicula.update({
+            imagen,
             titulo,
             fecha_de_creacion,
             clasificacion,
@@ -167,8 +341,71 @@ module.exports = {
         })
         .catch(err => res.status(500).json(err))
     },
-    searchMovie: (req,res)=>{
-       const { name, genre, order} = req.body;
+    associateCreate: (req,res)=>{
+        db.Personaje_pelicula.create({
+            personaje_id: req.body.personajeId,
+            pelicula_id : req.body.peliculaId
+        })
+        .then(associate => {
+            response = {
+                meta: {
+                    link: getUrl(req),
+                    status: 200,
+                    state: "la asociacion se realizo correctamente"
+                },
+                data: associate
+            }
+            return res.status(200).json(response)
+        })
+        .catch(error => res.status(500).json({
+            error:error
+        }))
+    },
+    associateUpdate:(req,res)=>{
+        db.Personaje_pelicula.update({
+            personaje_id: req.body.personajeId,
+            pelicula_id: req.body.peliculaId
+        },
+        {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(associate => {
+            response = {
+                meta: {
+                    link: getUrl(req),
+                    status: 200,
+                    state: "la asociacion se modifico correctamente"
+                },
+                data: associate
+            }
+            return res.status(200).json(response)
+        })
+        .catch(error => res.status(500).json({
+            error:error
+        }))
+    },
+    associateRemove:(req,res)=>{
+        db.Personaje_pelicula.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(associate => {
+            response = {
+                meta: {
+                    link: getUrl(req),
+                    status: 200,
+                    state: "la asociacion se elimino correctamente"
+                },
+                data: associate
+            }
+            return res.status(200).json(response)
+        })
+        .catch(error => res.status(500).json({
+            error:error
+        }))
     }
 
 }

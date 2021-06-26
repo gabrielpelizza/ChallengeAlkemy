@@ -1,6 +1,6 @@
 module.exports = function(sequelize, dataTypes) {
 
-    let alias = "personaje_pelicula";
+    let alias = "Personaje_pelicula";
 
     let cols = {
         id: {
@@ -10,10 +10,10 @@ module.exports = function(sequelize, dataTypes) {
         },
 
         personaje_id : {
-            type : dataTypes.INTEGER.UNSIGNED
+            type : dataTypes.INTEGER
         },
         pelicula_id : {
-            type : dataTypes.INTEGER.UNSIGNED
+            type : dataTypes.INTEGER
         },
     }
 
@@ -25,7 +25,7 @@ module.exports = function(sequelize, dataTypes) {
 
     let Charmovie = sequelize.define(alias, cols, config)
 
-    Charmovie.associate = function(models){
+/*     Charmovie.associate = function(models){
         Charmovie.belongsTo(models.Pelicula,{
             as : 'pelicula',
             foreignKey : 'pelicula_id'
@@ -36,7 +36,7 @@ module.exports = function(sequelize, dataTypes) {
             as : 'personaje',
             foreignKey : 'personaje_id'
         })
-    }
+    } */
 
     return Charmovie
 }

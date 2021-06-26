@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/charactersController')
+const {getAll, getById, create, update,associateUpdate, associateRemove, remove} = require('../controllers/charactersController')
 
-router.get('/', controller.getAll); //---> devuelve todos los actores
-/* router.post('/create', controller.create); */ //---> permite crear un actor
-/* router.get('/:id', controller.getById); */ //---> devuelve el actor segun parametro
-/* router.put('/update/:id',controller.update); */
-/* router.delete('/delete/:id',controller.delete) */
+router.get('/', getAll); //---> devuelve todos los actores
+router.post('/create', create); //---> permite crear un actor
+router.get('/:id', getById); //---> devuelve el actor segun parametro
+router.put('/update/:id',update);
+router.delete('/delete/:id',remove);
+router.post('/associate', verifyToken,associateCreate)
+router.post('/associate/update',verifyToken, associateUpdate)
+router.post('/assosiate/remove',verifyToken, associateRemove)
+
 module.exports = router
