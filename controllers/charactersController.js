@@ -119,17 +119,6 @@ module.exports = {
         
     },
     getById: function(req, res) {
-/*         db.Personaje.findByPk(req.params.id)
-            .then(function(character) {
-                let response = {
-                    meta: {
-                        link: getUrl(req),
-                        status: 200,
-                    },
-                    data: character
-                }
-                return res.status(200).json(response)
-            }) */
             if (req.params.id % 1 !== 0) {
                 let response = {
                     meta: {
@@ -187,7 +176,12 @@ module.exports = {
                         return res.status(404).json(response)
                     }
                 })
-                .catch(error => res.status(400).send(error))
+                .catch(error => res.status(400).json({
+                    meta: {
+                        status: 400,
+                        msg: error
+                    }
+                }))
             }
     },
     create: function(req, res) {
@@ -199,7 +193,13 @@ module.exports = {
                 historia: req.body.historia
             })
             .then(function(result) {
-                return res.status(201).json(result)
+                return res.status(201).json({
+                    meta: {
+                        status: 200,
+                        msg: "el personaje se agrego correctamente",
+                    },
+                    data: result
+                })
             })
             .catch(function(err) {
                 return res.status(400).send(err)
@@ -219,8 +219,8 @@ module.exports = {
             }
         })
         .then(function() {
-            return res.status(201).json({
-                msg : "Actualización exitosa"
+            return res.status(200).json({
+                
             })
         })
         .catch(err => res.status(400).send(err))
