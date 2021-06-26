@@ -195,7 +195,7 @@ module.exports = {
             .then(function(result) {
                 return res.status(201).json({
                     meta: {
-                        status: 200,
+                        status: 201,
                         msg: "el personaje se agrego correctamente",
                     },
                     data: result
@@ -219,11 +219,19 @@ module.exports = {
             }
         })
         .then(function() {
-            return res.status(200).json({
-                
+            return res.status(201).json({
+                meta:{
+                    status:201,
+                    msg: "el personaje se actualizo correctamente"
+                }
             })
         })
-        .catch(err => res.status(400).send(err))
+        .catch(error => res.status(400).json({
+            data:{
+                status:400,
+                msg: error
+            }
+        }))
     },
     remove : function(req,res){
       
@@ -240,10 +248,19 @@ module.exports = {
             })
             .then(function() {
                 return res.status(201).json({
-                    msg : "Persoaje eliminado"
+                    meta:{
+                        status:201,
+                        msg: "el personaje se elimino correctamente"
+                    }
                 })
             })
-            .catch(err => res.status(400).send(err))
+            .catch(error => res.status(400).json({
+                meta:{
+                    status:400,
+                    msg: "el personaje no se puedo eliminar",
+                    error: error
+                }
+            }))
         )
        
     },
@@ -255,16 +272,19 @@ module.exports = {
         .then(associate => {
             response = {
                 meta: {
-                    link: getUrl(req),
-                    status: 200,
-                    state: "la asociacion se realizo correctamente"
+                    status: 201,
+                    msg: "la asociacion se realizo correctamente"
                 },
                 data: associate
             }
             return res.status(200).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status:500,
+                msg: "no se pudo realizar la asociacion",
+                error: error
+            }
         }))
     },
     associateUpdate:(req,res)=>{
@@ -281,15 +301,18 @@ module.exports = {
             response = {
                 meta: {
                     link: getUrl(req),
-                    status: 200,
-                    state: "la asociacion se modifico correctamente"
+                    status: 201,
+                    msg: "la asociacion se modifico correctamente"
                 },
                 data: associate
             }
-            return res.status(200).json(response)
+            return res.status(201).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status: 500,
+                msg: error
+            }
         }))
     },
     associateRemove:(req,res)=>{
@@ -302,15 +325,18 @@ module.exports = {
             response = {
                 meta: {
                     link: getUrl(req),
-                    status: 200,
+                    status: 201,
                     state: "la asociacion se elimino correctamente"
                 },
                 data: associate
             }
-            return res.status(200).json(response)
+            return res.status(201).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status:500,
+                msg: error
+            }
         }))
     }
 

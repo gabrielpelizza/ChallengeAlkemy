@@ -169,7 +169,12 @@ module.exports = {
                             }
                             return res.status(200).json(response)
                         })
-                        .catch(error => res.status(404).send(error))
+                        .catch(error => res.status(404).json({
+                            meta:{
+                                status: 404,
+                                msg: error
+                            }
+                        }))
                         break;
                     default:
                         res.status(404).json({
@@ -240,7 +245,12 @@ module.exports = {
                     return res.status(404).json(response)
                 }
             })
-            .catch(error => res.status(400).send(error))
+            .catch(error => res.status(400).send({
+                meta:{
+                    status: 400,
+                    msg: error
+                }
+            }))
         }
 
     },
@@ -256,8 +266,11 @@ module.exports = {
         })
         .then(movie => {
             return res.status(201).json({
-                link: getBaseUrl(req) + '/movies/' + movie.id,
-                msg: "Pelicula añadida con éxito"
+                meta:{
+                    link: getBaseUrl(req) + '/movies/' + movie.id,
+                    status:201,
+                    msg: "Pelicula añadida con éxito"
+                }
             })
         })
         .catch(error => {
@@ -287,7 +300,12 @@ module.exports = {
                     }
                     return res.status(400).json(response)
                 default:
-                    return res.status(500).json({error})
+                    return res.status(500).json({
+                        meta:{
+                            status:500,
+                            msg:error.message
+                        }
+                    })
             }
         })
     },
@@ -310,11 +328,17 @@ module.exports = {
                 if (result[0]) {
                     console.log(result)
                     return res.status(201).json({
-                        msg: "Actualización exitosa"
+                        meta:{
+                            status:201,
+                            msg: "Actualización exitosa"
+                        }
                     })
                 } else {
                     return res.status(200).json({
-                        msg: "No se hicieron cambios"
+                       meta:{
+                            status:200,
+                            msg: "No se hicieron cambios"
+                       }
                     })
                 }
             })
@@ -329,11 +353,17 @@ module.exports = {
         .then(result => {
             if (result) {
                 return res.status(200).json({
-                    msg: "Pelicula eliminada"
+                    meta:{
+                        status:200,
+                        msg: "Pelicula eliminada"
+                    }
                 })
             } else {
                 return res.status(200).json({
-                    msg: "No se hicieron cambios"
+                    meta:{
+                        status:200,
+                        msg: "No se hicieron cambios"
+                    }
                 })
             }
 
@@ -357,7 +387,10 @@ module.exports = {
             return res.status(200).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status:500,
+                msg:error
+            }
         }))
     },
     associateUpdate:(req,res)=>{
@@ -382,7 +415,10 @@ module.exports = {
             return res.status(200).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status:500,
+                msg:error
+            }
         }))
     },
     associateRemove:(req,res)=>{
@@ -403,7 +439,10 @@ module.exports = {
             return res.status(200).json(response)
         })
         .catch(error => res.status(500).json({
-            error:error
+            meta:{
+                status:500,
+                msg:error
+            }
         }))
     }
 

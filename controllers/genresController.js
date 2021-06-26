@@ -53,7 +53,12 @@ module.exports = {
                         return res.status(404).json(response)
                     }
                 })
-                .catch(err => res.status(404).json(err))
+                .catch(error => res.status(404).json({
+                    meta:{
+                        status:404,
+                        msg:error
+                    }
+                }))
         }
     },
     create: function (req, res) {
@@ -62,8 +67,10 @@ module.exports = {
         })
         .then(function (genre) {
             return res.status(201).json({
-                link: getBaseUrl(req) + '/genres/' + genre.id,
-                msg: 'Género añadido con éxito'
+                meta:{
+                    status:201,
+                    msg: 'Género añadido con éxito'
+                }
             })
         })
         .catch(error => {
@@ -119,7 +126,12 @@ module.exports = {
                     })
                 }
             })
-            .catch(errres.status(500).json(err))
+            .catch(error.status(500).json({
+                meta:{
+                    status:500,
+                    msg:error
+                }
+            }))
     },
     remove: function (req, res) {
         db.Genero.destroy({
@@ -130,15 +142,26 @@ module.exports = {
         .then(result => {
             if (result) {
                 return res.status(200).json({
-                    msg: "Género eliminado"
+                    meta:{
+                        status:200,
+                        msg: "Género eliminado"
+                    }
                 })
             } else {
                 return res.status(200).json({
-                    msg: "No se hicieron cambios"
+                    meta:{
+                        status:200,
+                        msg: "No se hicieron cambios"
+                    }
                 })
             }
 
         })
-            .catch(err.status(500).json(err))
+        .catch(error.status(500).json({
+            meta:{
+                status:500,
+                msg:error
+            }
+        }))
     }
 }

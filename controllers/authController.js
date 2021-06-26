@@ -136,11 +136,11 @@ module.exports = {
                 .then(response =>{
                     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
                     const msg = {
-                        to: response.email, // Change to your recipient
-                        from: 'gbrpelizza@gmail.com', // Change to your verified sender
-                        subject: 'Sending with SendGrid is Fun',
-                        text: 'and easy to do anywhere, even with Node.js',
-                        html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                        to: response.email, 
+                        from: process.env.SENDGRID_EMAIL,
+                        subject: 'peliculas_disney',
+                        text: 'Bienvenido a la api de peliculas de disney',
+                        html: '<strong>Bienvenido</strong>',
                     }
         
                     sgMail.send(msg).then(() => {
@@ -151,7 +151,6 @@ module.exports = {
                         })
                     }).catch((error) => {
                         console.log(error.response.body)
-                        // console.log(error.response.body.errors[0].message)
                     })
                 })
             }
