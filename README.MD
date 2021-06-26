@@ -13,5 +13,5 @@
 
 
 # faltantes
-    -faltaron algunas verificaciones de sequelize ya que no esta en todos los archivos.
+    -faltaron varias validacions de sequelize, ya que no esta en todos los archivos.
     -en documentacion falta la respuesta de algunos endpoint.
