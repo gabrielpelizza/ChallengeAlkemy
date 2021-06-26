@@ -1,0 +1,636 @@
+{
+	"info": {
+		"_postman_id": "ba7ac945-59d9-47b0-aecc-b8b332cb7425",
+		"name": "peliculas-disney",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "loremipsum@example.com",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "para poder registrarte debes ingresar email y contraseña, si no hay error durante el registro se te retornara el token necesario para realizar operaciones avanzadas"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "loremipsum@example.com",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Para iniciar session solo se necesita el email y contraseña, al hacerlo se te retornara el token nuevamente, recuerda que tiene una duracion de 24 horas, asi que deberas iniciar session cada 24 horas."
+			},
+			"response": []
+		},
+		{
+			"name": "todas las peliculas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/movies",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies"
+					]
+				},
+				"description": "Trae todas las peliculas que se encuentren en la base de datos, tambien puedes realizar filtros de la siguiente forma:\n\n<b>Ordena las peliculas en orden descendente:</b>\n\nlocalhost:3000/movies?order=DESC\n\n\n<b>Ordenalas peliculas de forma ascendente:</b>\n\nlocalhost:3000/movies?order=ASC\n\n\n<b>Busqueda por nombre o letra:</b>\n\nlocalhost:3000/movies?name=exam\nple\n\n\n<b>Filtrar por genero:</b>\n\nlocalhost:3000/movies?genre=1"
+			},
+			"response": []
+		},
+		{
+			"name": "buscar pelicula por id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:3000/movies/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"1"
+					]
+				},
+				"description": "trae una la pelicula especificada por el id, el mismo se envia como parametro\n\nejemplo:\nlocalhost:3000/movies/1"
+			},
+			"response": []
+		},
+		{
+			"name": "crear pelicula",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "imagen",
+							"value": "\"link de la imagen\"",
+							"type": "text"
+						},
+						{
+							"key": "titulo",
+							"value": "lorem ipsum",
+							"type": "text"
+						},
+						{
+							"key": "fecha_de_creacion",
+							"value": "00-00-00",
+							"type": "text"
+						},
+						{
+							"key": "clasificacion",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "genero_id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/movies/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"create"
+					]
+				},
+				"description": "Para la creacion de una pelicula deberas ingresar imagen, titulo, fecha de creacion, clasificacion y genero_id."
+			},
+			"response": []
+		},
+		{
+			"name": "modificar pelicula",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "imagen",
+							"value": "\"tu imagen\"",
+							"type": "text"
+						},
+						{
+							"key": "titulo",
+							"value": "lorem ipsum2",
+							"type": "text"
+						},
+						{
+							"key": "fecha_de_creacion",
+							"value": "00-00-00",
+							"type": "text"
+						},
+						{
+							"key": "clasificacion",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "genero_id",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/movies/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"update",
+						"1"
+					]
+				},
+				"description": "Para poder acutalizar la una pelicula, debes enviar el id como parametro, y luego ingresar los datos de la pelicula y modificarlos"
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar pelicula",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/movies/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"delete",
+						"1"
+					]
+				},
+				"description": "Elimina la pelicula mediante el id que se pase como parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "todos los personajes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/characters/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						""
+					]
+				},
+				"description": "Trae a todos los personajes"
+			},
+			"response": []
+		},
+		{
+			"name": "buscar personaje por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/characters/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"1"
+					]
+				},
+				"description": "trae el personaje especificado con el id por parametro:\n\nlocalhost:3000/characters/1"
+			},
+			"response": []
+		},
+		{
+			"name": "agregar personaje",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "imagen",
+							"value": "\"tu imagen\"",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "lorem ipsum",
+							"type": "text"
+						},
+						{
+							"key": "edad",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "peso",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "historia",
+							"value": "lorem ipsum dolor sit amet",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/characters/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"create"
+					]
+				},
+				"description": "Para crear un personaje necesitas enviar por body imagen, nombre, edad, peso, historia"
+			},
+			"response": []
+		},
+		{
+			"name": "modificar personaje",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "imagen",
+							"value": "\"tu imagen\"",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "lorem ipsum",
+							"type": "text"
+						},
+						{
+							"key": "edad",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "peso",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "historia",
+							"value": "lorem ipsum dolor sit amet",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/characters/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"update",
+						"1"
+					]
+				},
+				"description": "para modificar un personaje solo debes enviar por parametro el id del personaje a modificar y por body los elementos a modificar"
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar un personaje",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/characters/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"delete",
+						"1"
+					]
+				},
+				"description": "Para eliminar un personaje solo debes pasar el id por parametro y listo, personaje eliminado"
+			},
+			"response": []
+		},
+		{
+			"name": "generos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/genres",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"genres"
+					]
+				},
+				"description": "Muestra todos los generos"
+			},
+			"response": []
+		},
+		{
+			"name": "buscar genero por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/genres/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"genres",
+						"2"
+					]
+				},
+				"description": "Muestra un genero en especifico, mediante al id enviado por parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "crear genero",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "lorem ipsum",
+							"type": "text"
+						},
+						{
+							"key": "imagen",
+							"value": "\"tu imagen\"",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/genres/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"genres",
+						"create"
+					]
+				},
+				"description": "Para crear un genero solo debes de enviar el nombre y la imagen(en el caso que la posea)"
+			},
+			"response": []
+		},
+		{
+			"name": "modificar genero",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "lorem ipsum2",
+							"type": "text"
+						},
+						{
+							"key": "imagen",
+							"value": "\"imagen modificada\"",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/genres/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"genres",
+						"update",
+						"1"
+					]
+				},
+				"description": "Para modificar el genero es necesario que se pase el id del genero a modificar por parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar genero",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/genres/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"genres",
+						"delete",
+						"1"
+					]
+				},
+				"description": "para eliminarlo solo debes enviar el id y listo genero eliminado"
+			},
+			"response": []
+		},
+		{
+			"name": "crear asociacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "personajeId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "peliculaId",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/movies/associate/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"associate",
+						""
+					]
+				},
+				"description": "Para realizar la asociacion solo debes ingresar el id del personaje y el id de la pelicula.\n\ntambien existe la posibilidad de realizar lo mismo pero desde personajes con el siguiente endpoint:\n\nlocalhost:3000/characters/associate/"
+			},
+			"response": []
+		},
+		{
+			"name": "modificar asociacion",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "personajeId",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "peliculaId",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/movies/associate/update/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"associate",
+						"update",
+						""
+					]
+				},
+				"description": "para modificar solo basta con enviar el id de la asociacion ya antes creada y modificarla\n\ntambien existe la posibilidad de realizar lo mismo pero desde personajes con el siguiente endpoint:\n\nlocalhost:3000/characters/associate/update/"
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar asociacion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/movies/associate/delete/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"associate",
+						"delete",
+						"1"
+					]
+				},
+				"description": "Para eliminar la asociacion solo debes ingresar el id de la asociacion a eliminar, esta accion tambien se puede realizar al eliminar un personaje.\n\n\ntambien existe la posibilidad de realizar lo mismo pero desde personajes con el siguiente endpoint:\n\nlocalhost:3000/characters/associate/delete/"
+			},
+			"response": []
+		}
+	]
+}
